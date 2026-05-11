@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm build *)",
+      "Bash(pnpm exec *)",
+      "PowerShell(Rename-Item *)",
+      "PowerShell(pnpm list *)",
+      "PowerShell(\\(Get-Item \"C:\\\\Users\\\\JuanCarlos\\\\Desktop\\\\Startup1\\\\celida-cafe-spa\\\\node_modules\\\\eslint-config-next\"\\).Target; Get-Item \"C:\\\\Users\\\\JuanCarlos\\\\Desktop\\\\Startup1\\\\celida-cafe-spa\\\\node_modules\\\\eslint-config-next\" | Select-Object LinkType, Target)",
+      "PowerShell(cmd /c dir /a \"C:\\\\Users\\\\JuanCarlos\\\\Desktop\\\\Startup1\\\\celida-cafe-spa\\\\node_modules\\\\.pnpm\\\\eslint-config-next@16.2.6_@_dffccfc4ceb039b63e43ec7dfbeb435c\\\\node_modules\\\\eslint-config-next\" 2>&1)",
+      "PowerShell(cmd /c dir /a \"C:\\\\Users\\\\JuanCarlos\\\\Desktop\\\\Startup1\\\\celida-cafe-spa\\\\node_modules\\\\.pnpm\\\\eslint-config-next@16.2.6_@_dffccfc4ceb039b63e43ec7dfbeb435c\\\\node_modules\\\\eslint-config-next\\\\dist\" 2>&12)",
+      "Bash(pnpm analyze *)",
+      "PowerShell(Stop-Process *)"
+    ]
+  }
+}
