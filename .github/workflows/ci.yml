@@ -100,7 +100,7 @@ jobs:
       # Cache del build de Next.js: .next/cache acelera enormemente builds incrementales.
       # Key compuesta: si cambia el lockfile o cualquier archivo .ts/.tsx/.js, invalida la cache.
       - name: Cache Next.js build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
