@@ -9,6 +9,7 @@ export interface MenuItem {
 export interface BusinessInfo {
   name: string
   address: string
+  phone: string
   mapsUrl: string
   hours: {
     weekdays: { open: string; close: string; label: string }
@@ -20,4 +21,6 @@ export interface BusinessInfo {
 export interface SocialLink {
   label: string
   url: string
+  platform: 'instagram' | 'facebook' | 'twitter' | 'tiktok'
+  handle: string
 }

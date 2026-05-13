@@ -1,0 +1,117 @@
+name: CI
+
+# Trigger: push a main y cualquier PR contra main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancela runs viejos en la misma rama cuando llega un nuevo commit.
+# Ahorra minutos de CI cuando empujas varios commits seguidos.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Permisos mínimos por defecto (principio de menor privilegio).
+permissions:
+  contents: read
+
+# Variables compartidas por todos los jobs.
+env:
+  NODE_VERSION: '22'   # LTS actual; Next 16 requiere mínimo 20.9
+  NEXT_TELEMETRY_DISABLED: '1'  # No mandar telemetría desde CI
+
+jobs:
+  # -----------------------------------------------------------------
+  # JOB 1: LINT — el más rápido, falla primero si hay errores de estilo
+  # -----------------------------------------------------------------
+  lint:
+    name: 🧹 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'  # Cachea ~/.npm entre runs (ahorra ~30-60s)
+
+      - name: Install dependencies
+        run: npm ci  # `ci` es más rápido y reproducible que `install` (respeta lockfile)
+
+      - name: Run ESLint
+        run: npm run lint
+
+  # -----------------------------------------------------------------
+  # JOB 2: TEST — Jest 30 con Testing Library
+  # -----------------------------------------------------------------
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest
+        run: npm test -- --ci --coverage --maxWorkers=2
+        # --ci         → modo CI (no watch, snapshots no se generan)
+        # --coverage   → genera reporte de cobertura
+        # --maxWorkers → limita workers para no saturar el runner (2 vCPUs)
+
+      - name: Upload coverage artifact
+        if: always()  # Sube el reporte aunque los tests fallen, para debugging
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
+
+  # -----------------------------------------------------------------
+  # JOB 3: BUILD — Next.js build de producción
+  # -----------------------------------------------------------------
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Cache del build de Next.js: .next/cache acelera enormemente builds incrementales.
+      # Key compuesta: si cambia el lockfile o cualquier archivo .ts/.tsx/.js, invalida la cache.
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Build Next.js
+        run: npm run build
+
+      # Opcional: si quieres analizar el bundle en CI, descomenta esto.
+      # - name: Bundle analyzer
+      #   run: npm run analyze
+      #   env:
+      #     ANALYZE: 'true'

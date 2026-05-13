@@ -107,6 +107,7 @@ export const MENU_ITEMS: Record<string, MenuItem[]> = {
 export const BUSINESS_INFO: BusinessInfo = {
   name: 'Célida Café',
   address: 'Ensenada, Baja California, México',
+  phone: '646 413 6156',
   mapsUrl: 'https://maps.google.com/?q=Ensenada,+Baja+California,+Mexico',
   hours: {
     weekdays: { open: '7am', close: '8pm', label: 'Lunes - Viernes' },
@@ -115,4 +116,17 @@ export const BUSINESS_INFO: BusinessInfo = {
   coordinates: { lat: 31.8667, lng: -116.5964 },
 }
 
-export const SOCIAL_LINKS: SocialLink[] = []
+export const SOCIAL_LINKS: SocialLink[] = [
+  {
+    label: 'Instagram',
+    url: 'https://www.instagram.com/celidacafe',
+    platform: 'instagram',
+    handle: '@celidacafe',
+  },
+  {
+    label: 'Facebook',
+    url: 'https://www.facebook.com/share/1BW9UzHmb1/',
+    platform: 'facebook',
+    handle: 'Célida Café',
+  },
+]

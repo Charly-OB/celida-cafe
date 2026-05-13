@@ -1,0 +1,63 @@
+# Dependabot config para celida-cafe-spa
+# Mantiene dependencias actualizadas con PRs automáticos.
+# Docs: https://docs.github.com/en/code-security/dependabot
+
+version: 2
+updates:
+  # ----------- npm (package.json) -----------
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/Tijuana'  # Tu zona horaria — Ensenada, BC
+    open-pull-requests-limit: 5
+    # Agrupa updates relacionados para no inundarte con PRs.
+    groups:
+      radix-ui:
+        patterns:
+          - '@radix-ui/*'
+      types:
+        patterns:
+          - '@types/*'
+      testing:
+        patterns:
+          - '@testing-library/*'
+          - 'jest'
+          - 'jest-*'
+          - 'ts-jest'
+      linting:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+          - 'prettier'
+          - '@eslint/*'
+    # Ignora major bumps de frameworks core — esos los haces tú a mano.
+    ignore:
+      - dependency-name: 'next'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react-dom'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'tailwindcss'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+    commit-message:
+      prefix: 'chore(deps)'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+
+  # ----------- GitHub Actions versions -----------
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    commit-message:
+      prefix: 'chore(actions)'
+    labels:
+      - 'dependencies'
+      - 'ci'
