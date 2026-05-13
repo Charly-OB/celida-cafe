@@ -1,7 +1,7 @@
-﻿# Known Issues — celida-cafe
+# Known Issues — celida-cafe
 
-**Última actualización**: 10 de mayo de 2026
-**Estado del proyecto**: Post-auditoría (3 fases completadas), local-only
+**Última actualización**: 12 de mayo de 2026
+**Estado del proyecto**: En producción — `celida-cafe.vercel.app`
 
 ---
 
@@ -21,6 +21,16 @@
 - **Especificación**: 1200×630 px, JPG optimizado, con logo Célida + tagline
 - **Impacto**: previews en redes sociales se ven sin imagen
 - **Acción**: generar cuando diseño visual final esté confirmado por dueño
+
+### LCP móvil elevado (4.6s) — bloqueado por fotos pendientes
+- **Status**: ⏸️ Bloqueado — esperando fotografías reales del cliente
+- **Causa raíz**: las imágenes actuales son URLs externas (Vercel Blob Storage). El Hero usa `background-image` CSS, que el browser no puede priorizar ni precargar automáticamente.
+- **Impacto**: Performance mobile = 79/100 (objetivo: ≥90). Desktop = 98/100 ✅
+- **Solución al resolver**: 
+  1. Colocar fotos reales en `/public/images/`
+  2. Reemplazar `style={{ backgroundImage }}` del Hero por `<Image>` de Next.js con `priority`
+  3. Actualizar `FEATURED_IMAGES` en `lib/constants.ts` a rutas locales (`/images/...`)
+  4. Resultado esperado: LCP baja a ~1.5-2.0s, Performance mobile sube a ≥90
 
 ### Sección "Contacto" en navbar
 - **Status**: Link en navbar apunta a sección no implementada (feature pendiente)
