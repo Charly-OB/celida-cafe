@@ -27,7 +27,7 @@ function MenuItemDialog({ item, isOpen, onClose }: Props) {
           <div className="relative aspect-[4/3] w-full">
             <Image
               src={item.image}
-              alt={item.name}
+              alt=""
               fill
               className="object-cover"
               sizes="(max-width: 640px) 100vw, 500px"

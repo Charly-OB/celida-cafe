@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <Image
             src={LOGO_URL}
-            alt="Célida Café"
+            alt=""
             width={100}
             height={40}
             className="h-8 w-auto object-contain invert"

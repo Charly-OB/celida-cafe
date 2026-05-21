@@ -87,7 +87,7 @@ export default function Gallery() {
             >
               <Image
                 src={item.src}
-                alt={item.alt}
+                alt=""
                 fill
                 className={`object-cover transition-opacity duration-500 ${item.video ? 'group-hover:opacity-0' : ''}`}
                 sizes="(max-width: 768px) 50vw, 25vw"

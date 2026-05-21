@@ -26,15 +26,17 @@ export default function Hero() {
           transition={reduced ? { duration: 0 } : { duration: 0.8 }}
           className="mb-8"
         >
-          <Image
-            src={LOGO_URL}
-            alt="Célida Café"
-            width={300}
-            height={120}
-            className="h-24 sm:h-32 md:h-40 w-auto mx-auto object-contain invert"
-            priority
-            fetchPriority="high"
-          />
+          <h1>
+            <Image
+              src={LOGO_URL}
+              alt="Célida Café"
+              width={300}
+              height={120}
+              className="h-24 sm:h-32 md:h-40 w-auto mx-auto object-contain invert"
+              priority
+              fetchPriority="high"
+            />
+          </h1>
         </motion.div>
 
         <motion.p

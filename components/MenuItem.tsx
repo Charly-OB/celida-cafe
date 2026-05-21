@@ -27,7 +27,7 @@ function MenuItem({ item, onClick }: Props) {
             <Flame className="w-4 h-4 text-orange-400 flex-shrink-0" aria-hidden="true" />
           )}
           {item.image && (
-            <span className="text-[10px] text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded">FOTO</span>
+            <span className="text-xs text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded">FOTO</span>
           )}
         </div>
         {item.description && (
