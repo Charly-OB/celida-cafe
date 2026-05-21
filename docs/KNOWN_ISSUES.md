@@ -1,6 +1,6 @@
 # Known Issues — celida-cafe
 
-**Última actualización**: 12 de mayo de 2026
+**Última actualización**: 21 de mayo de 2026
 **Estado del proyecto**: En producción — `celida-cafe.vercel.app`
 
 ---
@@ -45,25 +45,23 @@
 
 ## ⚠️ Deuda técnica conocida
 
-### WAVE Audit — 7 alerts no críticos
-Auditoría manual con WAVE Evaluation Tool dio **0 errores, 0 contrast errors, AIM Score 9.8/10**. Quedaron 7 alerts amarillos:
+### WAVE Audit — 3 alerts restantes (de 7 originales)
+Auditoría manual con WAVE Evaluation Tool dio **0 errores, 0 contrast errors, AIM Score 9.8/10**. En la auditoría del 21 may 2026 se corrigieron 4 de 7 alerts:
 
-- **4 Redundant alternative text**: imágenes con `alt` que duplica texto del contexto. Revisar y simplificar.
-- **1 Missing first level heading**: verificar jerarquía de `<h1>` en página principal.
-- **1 Possible heading**: texto que parece título marcado como párrafo.
-- **1 Very small text**: identificar texto bajo 14px (probablemente footer/disclaimer) y considerar aumentar.
+- ~~**4 Redundant alternative text**~~: ✅ Resuelto — Gallery, Footer, MenuItemDialog cambiadas a `alt=""`.
+- ~~**1 Missing first level heading**~~: ✅ Resuelto — Logo en Hero.tsx envuelto en `<h1>`.
+- ~~**1 Very small text**~~: ✅ Resuelto — Badge FOTO en MenuItem.tsx cambiado de 10px a `text-xs` (12px).
+- **1 Possible heading**: texto que parece título marcado como párrafo. Pendiente de re-medir en URL pública.
 
-**Target post-fix**: AIM Score 10/10.
+**Target**: AIM Score 10/10 (pendiente re-medición post-deploy).
 
 ### Lighthouse Desktop no medible en localhost
 - **Status**: Error NO_FCP en localhost (carga muy rápida para Lighthouse)
 - **Workaround**: medido solo Mobile (85/100/100/96 — excelente)
 - **Acción**: re-medir Desktop post-deploy a staging/producción
 
-### Cobertura de useActiveSection.ts (74%)
-- **Status**: Líneas 14-20 no cubiertas (edge cases de IntersectionObserver)
-- **Impacto**: bajo (hook estable, comportamiento validado manualmente)
-- **Acción opcional**: agregar tests de mock IntersectionObserver con thresholds variados
+### ~~Cobertura de useActiveSection.ts (74%)~~ ✅ Resuelto (21 may 2026)
+- Cobertura llevada a **100%** en todas las métricas con 6 nuevos tests en `__tests__/useActiveSection.test.ts`.
 
 ### Notas estéticas pendientes de aprobación del dueño
 - Observaciones detectadas en Bloque 2 (auditoría manual mobile)
@@ -108,6 +106,7 @@ Auditoría manual con WAVE Evaluation Tool dio **0 errores, 0 contrast errors, A
 | Fecha | Acción | Responsable |
 |---|---|---|
 | 10 may 2026 | Auditoría inicial completada | Charly + IA pair |
+| 21 may 2026 | Segunda auditoría: seguridad, a11y, tests | Charly + IA pair |
 | Ago 2026 | Próxima revisión técnica (3 meses) | Charly |
 | TBD | Pre-deploy a staging: re-medir Desktop Lighthouse + WAVE en URL pública | Charly |
 | TBD | Post-deploy a producción: validación final + monitoring Core Web Vitals | Charly |
